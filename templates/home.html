@@ -1,49 +1,130 @@
 <!DOCTYPE html>
-<html >
-
+<html>
 <head>
   <meta charset="UTF-8">
   <title>ML API</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Hind:300" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
 
-  
+  <style>
+    body {
+      font-family: 'Arimo', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #2f4f4f; /* Dark Slate Gray background */
+      color: #fff;
+    }
+
+    .login {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .login h1 {
+      font-family: 'Merriweather', serif; /* Formal serif font */
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .login input[type="text"] {
+      font-family: 'Arimo', sans-serif;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+
+    .login button {
+      font-family: 'Hind', sans-serif;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background: #5cb85c;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login button:hover {
+      background: #4cae4c;
+    }
+
+    .field-info {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .field-info p {
+      margin: 0;
+      padding: 5px;
+    }
+
+    .field-info p:nth-child(even) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
 </head>
-
 <body>
- <div class="login">
-	<h1>Boston House Price Prediction</h1>
-
-     <!-- Main Input For Receiving Query to our ML -->
-        <form action="{{ url_for('predict')}}"method="post">
-      <input type="text" name="CRIM" placeholder="CRIM" required="required" /><br>
-    	<input type="text" name="ZN" placeholder="ZN" required="required" /><br>
-        <input type="text" name="INDUS" placeholder="INDUS" required="required" /><br>
-        <input type="text" name="CHAS" placeholder="CHAS" required="required" /><br>
-        <input type="text" name="NOX" placeholder="NOX" required="required" /><br>
-        <input type="text" name="RM" placeholder="RM" required="required" /><br>
-        <input type="text" name="Age" placeholder="Age" required="required" /><br>
-        <input type="text" name="DIS" placeholder="DIS" required="required" /><br>
-        <input type="text" name="RAD" placeholder="RAD" required="required" /><br>
-        <input type="text" name="TAX" placeholder="TAX" required="required" /><br>
-        <input type="text" name="PTRATIO" placeholder="PTRATIO" required="required" /><br>
-        <input type="text" name="B" placeholder="B" required="required" /><br>
-        <input type="text" name="LSTAT" placeholder="LSTAT" required="required" /><br>
-
-       
-
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+  <div class="login">
+    <h1>Boston House Price Prediction</h1>
+    <div class="field-info">
+      <p><strong>CRIM:</strong> Per capita crime rate by town</p>
+      <p><strong>ZN:</strong> Proportion of residential land zoned for lots over 25,000 sq.ft.</p>
+      <p><strong>INDUS:</strong> Proportion of non-retail business acres per town</p>
+      <p><strong>CHAS:</strong> Charles River dummy variable (= 1 if tract bounds river; 0 otherwise)</p>
+      <p><strong>NOX:</strong> Nitric oxides concentration (parts per 10 million)</p>
+      <p><strong>RM:</strong> Average number of rooms per dwelling</p>
+      <p><strong>AGE:</strong> Proportion of owner-occupied units built prior to 1940</p>
+      <p><strong>DIS:</strong> Weighted distances to five Boston employment centres</p>
+      <p><strong>RAD:</strong> Index of accessibility to radial highways</p>
+      <p><strong>TAX:</strong> Full-value property-tax rate per $10,000</p>
+      <p><strong>PTRATIO:</strong> Pupil-teacher ratio by town</p>
+      <p><strong>B:</strong> 1000(Bk - 0.63)^2 where Bk is the proportion of black people by town</p>
+      <p><strong>LSTAT:</strong> Percentage of lower status of the population</p>
+    </div>
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}" method="post">
+      <div class="form-grid">
+        <input type="text" name="CRIM" placeholder="CRIM" required="required" />
+        <input type="text" name="ZN" placeholder="ZN" required="required" />
+        <input type="text" name="INDUS" placeholder="INDUS" required="required" />
+        <input type="text" name="CHAS" placeholder="CHAS" required="required" />
+        <input type="text" name="NOX" placeholder="NOX" required="required" />
+        <input type="text" name="RM" placeholder="RM" required="required" />
+        <input type="text" name="Age" placeholder="Age" required="required" />
+        <input type="text" name="DIS" placeholder="DIS" required="required" />
+        <input type="text" name="RAD" placeholder="RAD" required="required" />
+        <input type="text" name="TAX" placeholder="TAX" required="required" />
+        <input type="text" name="PTRATIO" placeholder="PTRATIO" required="required" />
+        <input type="text" name="B" placeholder="B" required="required" />
+        <input type="text" name="LSTAT" placeholder="LSTAT" required="required" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
-
-   <br>
-   <br>
-  
-   
- </div>
- {{prediction_text}}
-
+    <br>
+    <br>
+    {{prediction_text}}
+  </div>
 </body>
 </html>
-
