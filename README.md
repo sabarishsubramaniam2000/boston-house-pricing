@@ -1,1 +1,1 @@
-# boston-house-pricing
+# Boston house price estimator
